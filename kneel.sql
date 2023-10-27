@@ -26,3 +26,19 @@ CREATE TABLE `Orders` (
     FOREIGN KEY (`style_id`) REFERENCES `Styles`(`id`),
     FOREIGN KEY (`size_id`) REFERENCES `Sizes`(`id`)
 );
+
+
+INSERT INTO `Metals` VALUES (null,"Gold", 200.00);
+INSERT INTO `Metals` VALUES (null,"Silver", 120.50);
+INSERT INTO `Metals` VALUES (null,"Copper", 90.75);
+
+INSERT INTO `Styles` VALUES (null,"Round", 1500.00);
+INSERT INTO `Styles` VALUES (null,"Heart", 1250.50);
+INSERT INTO `Styles` VALUES (null,"Pear", 1100.75);
+
+INSERT INTO `Sizes` VALUES (null,"Small", 1000.00);
+INSERT INTO `Sizes` VALUES (null,"Medium", 5000.50);
+INSERT INTO `Sizes` VALUES (null,"Large", 9000.75);
+
+SELECT m.id, m.metal, m.price FROM Metals m;
+SELECT m.id, m.metal, m.price FROM Metals m WHERE m.id = 2;
