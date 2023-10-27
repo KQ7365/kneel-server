@@ -20,34 +20,51 @@ class JSONServer(HandleRequests):
         url = self.parse_url(self.path)
         view = self.determine_view(url)
 
-        try:
-            view.update(self, self.get_request_body(), url["pk"])
-        except AttributeError:
-            return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+        if url["requested_resource"] == "metals":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        if url["requested_resource"] == "styles":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        if url["requested_resource"] == "sizes":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+
+        else: 
+            return self.response("Try again", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
     def do_POST(self):
-        # Parse the URL
         url = self.parse_url(self.path)
-
-        # Determine the correct view needed to handle the requests
         view = self.determine_view(url)
-        # Get the request body
-        try:
-            view.add(self, self.get_request_body())
-        except AttributeError:
-            return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
-        # Invoke the correct method on the view
-
-        # Make sure you handle the AttributeError in case the client requested a route that you don't support
+      
+        if url["requested_resource"] == "metals":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        if url["requested_resource"] == "styles":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        if url["requested_resource"] == "sizes":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+  
+        else: 
+            url["requested_resource"] == "orders"
+            return self.response("Try again", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
     def do_DELETE(self):
         url = self.parse_url(self.path)
         view = self.determine_view(url)
 
-        try:
-            view.delete(self, url["pk"])
-        except AttributeError:
-            return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+        if url["requested_resource"] == "metals":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        if url["requested_resource"] == "styles":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        if url["requested_resource"] == "sizes":
+            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        
+        else: 
+            url["requested_resource"] == "orders"
+            return self.response("Try again", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+
+        #!May need to add else when it comes to orders or just reverse if statement to where Else becomes any other url
+        # try:
+        #     view.delete(self, url["pk"])
+        # except AttributeError:
+        #     return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
 
     def determine_view(self, url):
