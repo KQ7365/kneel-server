@@ -20,12 +20,16 @@ class JSONServer(HandleRequests):
         url = self.parse_url(self.path)
         view = self.determine_view(url)
 
-        if url["requested_resource"] == "metals":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        if url["requested_resource"] == "styles":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        if url["requested_resource"] == "sizes":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
+        disallowed_methods = {
+        "metals": "No changes allowed for this item",
+        "styles": "No changes allowed for this item",
+        "sizes": "No changes allowed for this item"
+        }
+
+        requested_resource = url["requested_resource"]
+
+        if requested_resource in disallowed_methods:
+            return self.response(disallowed_methods[requested_resource], status.HTTP_405_UNSUPPORTED_METHOD.value)
 
         else: 
             return self.response("Try again", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
@@ -33,32 +37,43 @@ class JSONServer(HandleRequests):
     def do_POST(self):
         url = self.parse_url(self.path)
         view = self.determine_view(url)
-      
-        if url["requested_resource"] == "metals":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        if url["requested_resource"] == "styles":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        if url["requested_resource"] == "sizes":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-  
-        else: 
-            url["requested_resource"] == "orders"
-            return self.response("Try again", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+
+        disallowed_methods = {
+        "metals": "No additions allowed for this item",
+        "styles": "No additions allowed for this item",
+        "sizes": "No additions allowed for this item"
+        }
+
+        requested_resource = url["requested_resource"]
+
+        if requested_resource in disallowed_methods:
+            return self.response(disallowed_methods[requested_resource], status.HTTP_405_UNSUPPORTED_METHOD.value)
+
+        try:
+            view.add_order(self, self.get_request_body())
+        except AttributeError:
+            return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+
 
     def do_DELETE(self):
         url = self.parse_url(self.path)
         view = self.determine_view(url)
 
-        if url["requested_resource"] == "metals":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        if url["requested_resource"] == "styles":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        if url["requested_resource"] == "sizes":
-            return self.response("No changes allowed for this item", status.HTTP_405_UNSUPPORTED_METHOD.value)
-        
-        else: 
-            url["requested_resource"] == "orders"
-            return self.response("Try again", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+        disallowed_methods = {
+        "metals": "No deletions allowed for this item",
+        "styles": "No deletions allowed for this item",
+        "sizes": "No deletions allowed for this item"
+        }
+
+        requested_resource = url["requested_resource"]
+
+        if requested_resource in disallowed_methods:
+            return self.response(disallowed_methods[requested_resource], status.HTTP_405_UNSUPPORTED_METHOD.value)
+
+        try:
+            view.delete_order(self, self.get_request_body())
+        except AttributeError:
+            return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
         #!May need to add else when it comes to orders or just reverse if statement to where Else becomes any other url
         # try:
