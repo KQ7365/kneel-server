@@ -40,5 +40,47 @@ INSERT INTO `Sizes` VALUES (null,"Small", 1000.00);
 INSERT INTO `Sizes` VALUES (null,"Medium", 5000.50);
 INSERT INTO `Sizes` VALUES (null,"Large", 9000.75);
 
+-- Order 1: Gold Round Small
+INSERT INTO `Orders` (`metal_id`, `style_id`, `size_id`) 
+VALUES (
+  (SELECT `id` FROM `Metals` WHERE `metal` = 'Gold'),
+  (SELECT `id` FROM `Styles` WHERE `style` = 'Round'),
+  (SELECT `id` FROM `Sizes` WHERE `caret` = 'Small')
+);
+
+-- Order 2: Silver Heart Medium
+INSERT INTO `Orders` (`metal_id`, `style_id`, `size_id`) 
+VALUES (
+  (SELECT `id` FROM `Metals` WHERE `metal` = 'Silver'),
+  (SELECT `id` FROM `Styles` WHERE `style` = 'Heart'),
+  (SELECT `id` FROM `Sizes` WHERE `caret` = 'Medium')
+);
+
+-- Order 3: Copper Pear Large
+INSERT INTO `Orders` (`metal_id`, `style_id`, `size_id`) 
+VALUES (
+  (SELECT `id` FROM `Metals` WHERE `metal` = 'Copper'),
+  (SELECT `id` FROM `Styles` WHERE `style` = 'Pear'),
+  (SELECT `id` FROM `Sizes` WHERE `caret` = 'Large')
+);
+
+-- Order 4: Gold Heart Large
+INSERT INTO `Orders` (`metal_id`, `style_id`, `size_id`) 
+VALUES (
+  (SELECT `id` FROM `Metals` WHERE `metal` = 'Gold'),
+  (SELECT `id` FROM `Styles` WHERE `style` = 'Heart'),
+  (SELECT `id` FROM `Sizes` WHERE `caret` = 'Large')
+);
+
+-- Order 5: Silver Round Small
+INSERT INTO `Orders` (`metal_id`, `style_id`, `size_id`) 
+VALUES (
+  (SELECT `id` FROM `Metals` WHERE `metal` = 'Silver'),
+  (SELECT `id` FROM `Styles` WHERE `style` = 'Round'),
+  (SELECT `id` FROM `Sizes` WHERE `caret` = 'Small')
+);
+
+
 SELECT m.id, m.metal, m.price FROM Metals m;
 SELECT m.id, m.metal, m.price FROM Metals m WHERE m.id = 2;
+SELECT o.id, o.metal_id, o.style_id, o.size_id FROM Orders o;
