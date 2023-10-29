@@ -23,7 +23,8 @@ class JSONServer(HandleRequests):
         disallowed_methods = {
         "metals": "No changes allowed for this item",
         "styles": "No changes allowed for this item",
-        "sizes": "No changes allowed for this item"
+        "sizes": "No changes allowed for this item",
+        "orders": "No changes allowed for this item"
         }
 
         requested_resource = url["requested_resource"]
@@ -71,7 +72,7 @@ class JSONServer(HandleRequests):
             return self.response(disallowed_methods[requested_resource], status.HTTP_405_UNSUPPORTED_METHOD.value)
 
         try:
-            view.delete_order(self, self.get_request_body())
+            view.delete_order(self, url["pk"] )
         except AttributeError:
             return self.response("No view for that route", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 

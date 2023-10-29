@@ -45,3 +45,10 @@ class OrdersView():
         else:
             return handler.response("", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
 
+    def delete_order(self, handler, pk):
+        row_deleted = db_delete("DELETE FROM Orders WHERE id = ?", pk)
+
+        if row_deleted > 0:
+            return handler.response("", status.HTTP_204_SUCCESS_NO_RESPONSE_BODY.value)
+        else:
+            return handler.response("", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
