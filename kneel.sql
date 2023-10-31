@@ -84,3 +84,14 @@ VALUES (
 SELECT m.id, m.metal, m.price FROM Metals m;
 SELECT m.id, m.metal, m.price FROM Metals m WHERE m.id = 2;
 SELECT o.id, o.metal_id, o.style_id, o.size_id FROM Orders o;
+
+SELECT Orders.id, Metals.metal, Styles.style, Sizes.caret
+FROM Orders
+JOIN Metals ON Orders.metal_id = Metals.id
+JOIN Styles ON Orders.style_id = Styles.id
+JOIN Sizes ON Orders.size_id = Sizes.id;
+
+  SELECT Orders.id, Orders.metal_id, Orders.style_id, Orders.size_id, Metals.id AS metal_id, Metals.metal, Metals.price
+    FROM Orders
+    JOIN Metals ON Orders.metal_id = Metals.id
+    WHERE Orders.id = 1;
